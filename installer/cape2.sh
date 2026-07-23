@@ -972,7 +972,9 @@ Wants=network.target
 After=network.target
 [Service]
 PermissionsStartOnly=true
-Environment="GLIBC_TUNABLES=glibc.pthread.rseq=0"
+# temporary https://miliucci.org/post/mongodb-tcmalloc-rseq/ workaround
+#Environment="GLIBC_TUNABLES=glibc.pthread.rseq=0"
+Environment="GLIBC_TUNABLES=glibc.pthread.rseq=1"
 #ExecStartPre=/bin/mkdir -p /data/{config,}db && /bin/chown mongodb:mongodb /data -R
 # https://www.tutorialspoint.com/mongodb/mongodb_replication.htm
 ExecStart=/usr/bin/numactl --interleave=all /usr/bin/mongod --setParameter "tcmallocReleaseRate=5.0"
